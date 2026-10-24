@@ -1,12 +1,24 @@
 {
-  "background_color": "#ffffff",
-  "dir": "ltr",
+  "name": "TEKTON Elevators",
+  "short_name": "TEKTON",
+  "description": "Official TEKTON Elevators site lead collection, survey entry, and operational status management app.",
+  "start_url": "./index.html",
   "display": "standalone",
-  "name": "tekvp.github",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "tekvp.github",
-  "start_url": "/",
-  "theme_color": "#ffffff",
-  "id": "TEKTON"
+  "background_color": "#0A1A3A",
+  "theme_color": "#0A1A3A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
