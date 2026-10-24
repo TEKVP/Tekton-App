@@ -1,29 +1,47 @@
-const CACHE_NAME = 'tekton-cache-v1';
-const ASSETS = [
+const CACHE_NAME = 'tekton-pwa-v1';
+const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './logo.png'
 ];
 
-self.addEventListener('install', event => {
+// Install Event: Cache critical assets
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
+    }).then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
+// Activate Event: Clear old caches
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys => 
-      Promise.all(keys.map(key => key !== CACHE_NAME && caches.delete(key)))
-    )
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
+// Fetch Event: Offline fallback strategy
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).catch(() => {
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
+      });
+    })
   );
 });
