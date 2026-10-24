@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "tekvp.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "tekvp.github",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "id": "TEKTON"
+}
