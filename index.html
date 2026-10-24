@@ -650,6 +650,15 @@
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   
 <script>
+
+  // Register Service Worker for Offline Capabilities & Store Submission Approval
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('Service Worker Registered Successfully', reg.scope))
+      .catch(err => console.log('Service Worker Registration Failed', err));
+  });
+}
 // ==================== APP SECURITY & LOGIN CONFIG ====================
 // Set your desired password/PIN here:
 const APP_PASSWORD = "vanagaram"; 
