@@ -8,12 +8,21 @@
   "id": "tekton-elevators-pwa",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["standalone", "window-controls-overlay"],
+  "display_override": [
+    "standalone",
+    "window-controls-overlay",
+    "minimal-ui"
+  ],
   "background_color": "#0A1A3A",
   "theme_color": "#0A1A3A",
   "orientation": "portrait",
-  "categories": ["business", "utilities"],
+  "categories": [
+    "business",
+    "utilities"
+  ],
   "prefer_related_applications": false,
+  "related_applications": [],
+  "iarc_rating_id": "e58c1706-613d-4217-0000-000000000000",
   "launch_handler": {
     "client_mode": "focus-existing"
   },
@@ -31,6 +40,22 @@
       "purpose": "maskable"
     }
   ],
+  "screenshots": [
+    {
+      "src": "logo.png",
+      "sizes": "900x207",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "TEKTON Elevators Executive Dashboard"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "900x207",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "TEKTON Elevators Mobile App Interface"
+    }
+  ],
   "shortcuts": [
     {
       "name": "New Site Survey",
@@ -44,6 +69,80 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "View Enquiries",
+      "short_name": "Enquiries",
+      "description": "Check current site lead status and pipeline",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "logo.png",
+          "sizes": "900x207",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "./index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "./index.html",
+      "name": "TEKTON Lead Data File",
+      "accept": {
+        "application/json": [".json"],
+        "text/csv": [".csv"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+tekton",
+      "url": "./index.html?lead=%s"
+    }
+  ],
+  "widgets": [
+    {
+      "name": "TEKTON Quick Stats",
+      "short_name": "TEKTON Stats",
+      "description": "Overview of TEKTON Lead Status",
+      "tag": "tekton-stats-widget",
+      "template": "tekton-stats-template",
+      "ms_ac_template": "widgets/tekton-stats.json",
+      "data": "widgets/tekton-stats-data.json",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "logo.png",
+          "sizes": "900x207",
+          "label": "Widget Preview"
+        }
+      ],
+      "icons": [
+        {
+          "src": "logo.png",
+          "sizes": "900x207"
+        }
+      ]
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "note_taking": {
+    "new_note_url": "./index.html"
+  },
+  "scope_extensions": [
+    {
+      "origin": "tekvp.github.io"
     }
   ]
 }
