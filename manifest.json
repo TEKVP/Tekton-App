@@ -2,15 +2,23 @@
   "name": "TEKTON Elevators",
   "short_name": "TEKTON",
   "description": "Official TEKTON Elevators site lead collection, survey entry, and operational status management app.",
+  "lang": "en-US",
+  "dir": "ltr",
   "start_url": "./index.html",
+  "id": "tekton-elevators-pwa",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay"],
   "background_color": "#0A1A3A",
   "theme_color": "#0A1A3A",
   "orientation": "portrait",
-  "id": "tekton-lead-app",
-  "scope": "./",
-  "prefer_related_applications": false,
   "categories": ["business", "utilities"],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "iarc_rating_id": "",
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
   "icons": [
     {
       "src": "logo.png",
@@ -26,9 +34,78 @@
     },
     {
       "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "TEKTON Elevators Desktop Interface"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "TEKTON Elevators Mobile Interface"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Site Survey",
+      "short_name": "New Survey",
+      "description": "Capture new elevator site lead and GPS data",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "View Lead Enquiries",
+      "short_name": "Enquiries",
+      "description": "Check current site lead status and pipeline",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "./index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "file_handlers": [],
+  "protocol_handlers": [],
+  "widgets": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "note_taking": {
+    "new_note_url": "./index.html"
+  },
+  "scope_extensions": []
 }
