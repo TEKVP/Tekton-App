@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TEKTON Elevators - Site Lead & Operations Management</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tektonNavy: '#0A1A3A',
+            tektonNavyDark: '#050E21',
+            tektonGold: '#F5A623',
+            tektonGoldHover: '#D98E19',
+            tektonGray: '#F4F6F9',
+            tektonCard: '#FFFFFF'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Neon Glow Animation for Elevator Splash Screen */
+    @keyframes neonGlow {
+      0%, 100% {
+        box-shadow: 0 0 15px #F5A623, inset 0 0 15px #F5A623, 0 0 30px #0A1A3A;
+        border-color: #F5A623;
+      }
+      50% {
+        box-shadow: 0 0 30px #F5A623, inset 0 0 20px #F5A623, 0 0 50px #3B82F6;
+        border-color: #FFD700;
+      }
+    }
+
+    .neon-border {
+      animation: neonGlow 2s infinite ease-in-out;
+    }
+
+    /* Elevator Sliding Doors Animation */
+    .door-left {
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+    .door-right {
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .doors-open .door-left {
+      transform: translateX(-100%);
+    }
+    .doors-open .door-right {
+      transform: translateX(100%);
+    }
+
+    .splash-fade-out {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    /* Hide scrollbars for slick mobile look */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- ==================== SPLASH SCREEN (ELEVATOR DOOR OPENING) ==================== -->
+  <div id="splashScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-tektonNavyDark overflow-hidden">
+    <!-- Elevator Outer Frame with Neon Border Glow -->
+    <div id="elevatorFrame" class="relative w-[92%] max-w-md h-[80vh] border-4 border-tektonGold rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center neon-border bg-gray-900">
+      
+      <!-- Elevator Interior Cabin Visual (Behind Doors) -->
+      <div class="absolute inset-0 bg-gradient-to-b from-gray-800 via-gray-900 to-black flex flex-col items-center justify-center p-6 text-center">
+        <div class="w-full h-full border border-gray-700/50 rounded-xl bg-gradient-to-tr from-slate-900 via-slate-800 to-slate-900 p-6 flex flex-col items-center justify-between shadow-inner">
+          
+          <!-- Top Cabin Ceiling Light Indicator -->
+          <div class="w-16 h-2 bg-tektonGold rounded-full shadow-[0_0_10px_#F5A623]"></div>
+          
+          <!-- Exact TEKTON Image Logo Displayed Inside Elevator Cabin -->
+          <div class="flex flex-col items-center my-auto">
+            <div class="bg-white p-4 rounded-xl shadow-2xl border-2 border-tektonGold mb-3 max-w-[240px] w-full flex items-center justify-center">
+              <img src="logo.png" alt="TEKTON Elevators" class="tekton-logo-img h-12 w-auto object-contain">
+            </div>
+            <p class="text-xs text-tektonGold tracking-widest uppercase font-semibold">Elevating Superior Spaces</p>
+          </div>
+
+          <div class="text-[10px] text-gray-400 font-mono">SYSTEM INITIALIZING...</div>
+        </div>
+      </div>
+
+      <!-- Elevator Left Sliding Door -->
+      <div id="doorLeft" class="door-left absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 border-r-2 border-tektonGold flex items-center justify-end pr-2 shadow-2xl z-10">
+        <div class="w-2 h-20 bg-slate-900 rounded-full border border-slate-500"></div>
+      </div>
+
+      <!-- Elevator Right Sliding Door -->
+      <div id="doorRight" class="door-right absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-slate-800 via-slate-700 to-slate-600 border-l-2 border-tektonGold flex items-center justify-start pl-2 shadow-2xl z-10">
+        <div class="w-2 h-20 bg-slate-900 rounded-full border border-slate-500"></div>
+      </div>
+
+    </div>
+  </div>
+
+<!-- ==================== LOGIN / SECURITY SCREEN ==================== -->
+<div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-tektonNavy p-4">
+  <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl text-center space-y-4 border-2 border-tektonGold">
+    
+    <!-- Updated Logo Container: White Background for High Contrast -->
+    <div class="bg-white px-4 py-2 rounded-xl flex items-center justify-center w-52 mx-auto shadow-md border-2 border-tektonGold">
+      <img src="logo.png" alt="TEKTON Elevators" class="tekton-logo-img h-10 w-auto object-contain">
+    </div>
+
+    <div>
+      <h3 class="text-lg font-bold text-tektonNavy">App Authorization</h3>
+      <p class="text-xs text-gray-500">Enter access PIN / Password to continue</p>
+    </div>
+
+    <!-- Password Input Field -->
+    <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
+      <div>
+        <input type="password" id="loginPassword" required placeholder="Enter Access PIN" class="w-full text-center py-3 text-base bg-gray-50 border border-gray-300 rounded-xl font-bold tracking-widest outline-none focus:ring-2 focus:ring-tektonGold focus:bg-white text-tektonNavy">
+        <p id="loginError" class="text-xs text-red-500 font-semibold mt-1.5 hidden">
+          <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect PIN/Password. Try again.
+        </p>
+      </div>
+
+      <button type="submit" class="w-full py-3 bg-tektonGold text-tektonNavy font-extrabold text-sm rounded-xl shadow-md hover:bg-tektonGoldHover transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-lock-open"></i>
+        <span>Unlock TEKTON App</span>
+      </button>
+    </form>
+
+  </div>
+</div>
+
+  <!-- ==================== MAIN APPLICATION CONTAINER ==================== -->
+  <div class="w-full max-w-md mx-auto min-h-screen bg-tektonGray flex flex-col shadow-2xl relative pb-28">
+
+    <!-- Top App Header -->
+    <header class="bg-tektonNavy text-white px-4 py-3 sticky top-0 z-30 shadow-md flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <!-- Exact TEKTON Image Logo in Header -->
+        <div class="bg-white px-2.5 py-1 rounded-lg border border-tektonGold flex items-center justify-center min-w-[130px] h-9 shadow-sm">
+          <img src="logo.png" alt="TEKTON Elevators" class="tekton-logo-img h-7 w-auto object-contain">
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3 text-xs">
+        <button onclick="triggerSync()" title="Sync with Google Sheets" class="flex items-center gap-1 bg-tektonGold/20 text-tektonGold px-2.5 py-1 rounded-full border border-tektonGold/40 hover:bg-tektonGold hover:text-tektonNavy transition">
+          <i class="fa-solid fa-rotate text-xs"></i>
+          <span class="font-semibold">Sync</span>
+        </button>
+        <div class="relative">
+          <i class="fa-solid fa-bell text-gray-300 text-base"></i>
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-tektonGold rounded-full"></span>
+        </div>
+      </div>
+    </header>
+
+
+    <!-- VIEW 1: HOME DASHBOARD -->
+    <main id="viewHome" class="app-view p-4 space-y-4">
+      
+      <!-- Greeting Banner -->
+      <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border-l-4 border-tektonGold">
+        <div>
+          <h2 class="text-base font-bold text-tektonNavy">Welcome, TEKTON Team</h2>
+          <p class="text-xs text-gray-500" id="currentDateStamp">Today's Lead & Site Survey Summary</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-tektonNavy text-tektonGold flex items-center justify-center font-bold text-sm">
+          TK
+        </div>
+      </div>
+
+      <!-- Quick Action Grid -->
+      <div class="grid grid-cols-4 gap-2">
+        <button onclick="switchTab('newLead')" class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:border-tektonGold transition">
+          <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mb-1">
+            <i class="fa-solid fa-plus text-base"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-700">New Survey</span>
+        </button>
+
+        <button onclick="switchTab('leads')" class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:border-tektonGold transition">
+          <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1">
+            <i class="fa-solid fa-list-check text-base"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-700">Enquiries</span>
+        </button>
+
+        <button onclick="switchTab('ops')" class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:border-tektonGold transition">
+          <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mb-1">
+            <i class="fa-solid fa-helmet-safety text-base"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-700">Operations</span>
+        </button>
+
+        <button onclick="switchTab('analytics')" class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:border-tektonGold transition">
+          <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center mb-1">
+            <i class="fa-solid fa-chart-line text-base"></i>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-700">Analytics</span>
+        </button>
+      </div>
+
+      <!-- Key Metrics KPI Cards -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-100">
+          <div class="flex justify-between items-center text-gray-500 mb-1">
+            <span class="text-xs font-medium">Total Enquiries</span>
+            <i class="fa-solid fa-folder-open text-blue-500"></i>
+          </div>
+          <div class="text-2xl font-bold text-tektonNavy" id="metricTotalLeads">0</div>
+        </div>
+
+        <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-100">
+          <div class="flex justify-between items-center text-gray-500 mb-1">
+            <span class="text-xs font-medium">Pending Surveys</span>
+            <i class="fa-solid fa-clock-rotate-left text-amber-500"></i>
+          </div>
+          <div class="text-2xl font-bold text-amber-600" id="metricPendingSurveys">0</div>
+        </div>
+
+        <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-100">
+          <div class="flex justify-between items-center text-gray-500 mb-1">
+            <span class="text-xs font-medium">In Erection / Ops</span>
+            <i class="fa-solid fa-gears text-purple-500"></i>
+          </div>
+          <div class="text-2xl font-bold text-purple-700" id="metricInOps">0</div>
+        </div>
+
+        <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-100">
+          <div class="flex justify-between items-center text-gray-500 mb-1">
+            <span class="text-xs font-medium">Completed / Handover</span>
+            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+          </div>
+          <div class="text-2xl font-bold text-emerald-600" id="metricCompleted">0</div>
+        </div>
+      </div>
+
+      <!-- Operational Lifecycle Pipeline Breakdown -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-tektonNavy flex items-center justify-between">
+          <span>TEKTON Lift Lifecycle Stage</span>
+          <span class="text-[10px] text-gray-400 font-normal">7 Active Phases</span>
+        </h3>
+        
+        <div class="space-y-1.5 text-xs pt-1">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">1. New Lead Enquiries</span>
+            <span class="font-bold text-tektonNavy" id="stageCountNew">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarNew" class="bg-blue-500 h-full w-0 transition-all"></div>
+          </div>
+
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-gray-600">2. Site Survey Completed</span>
+            <span class="font-bold text-tektonNavy" id="stageCountSurvey">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarSurvey" class="bg-indigo-500 h-full w-0 transition-all"></div>
+          </div>
+
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-gray-600">3. Commercial Quotation Shared</span>
+            <span class="font-bold text-tektonNavy" id="stageCountQuote">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarQuote" class="bg-amber-500 h-full w-0 transition-all"></div>
+          </div>
+
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-gray-600">4. Order Confirmed / Won</span>
+            <span class="font-bold text-tektonNavy" id="stageCountWon">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarWon" class="bg-emerald-500 h-full w-0 transition-all"></div>
+          </div>
+
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-gray-600">5. Manufacturing & Dispatch</span>
+            <span class="font-bold text-tektonNavy" id="stageCountMfg">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarMfg" class="bg-purple-500 h-full w-0 transition-all"></div>
+          </div>
+
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-gray-600">6. Shaft Erection & Installation</span>
+            <span class="font-bold text-tektonNavy" id="stageCountErection">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarErection" class="bg-orange-500 h-full w-0 transition-all"></div>
+          </div>
+
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-gray-600">7. Testing & Client Handover</span>
+            <span class="font-bold text-tektonNavy" id="stageCountHandover">0</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div id="stageBarHandover" class="bg-teal-500 h-full w-0 transition-all"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Enquiries List Header -->
+      <div class="flex items-center justify-between pt-1">
+        <h3 class="text-sm font-bold text-tektonNavy">Recent Site Enquiries</h3>
+        <button onclick="switchTab('leads')" class="text-xs text-tektonGold font-bold hover:underline">
+          View All <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+      <div id="homeRecentLeadsList" class="space-y-2.5">
+        <!-- Dynamic content filled via JS -->
+      </div>
+
+    </main>
+
+
+    <!-- VIEW 2: NEW LEAD FORM -->
+    <main id="viewNewLead" class="app-view p-4 space-y-4 hidden">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        
+        <div>
+          <h2 class="text-lg font-bold text-tektonNavy">New Lead Survey Entry</h2>
+          <p class="text-xs text-gray-500">Capture client details, elevator specs & GPS location.</p>
+        </div>
+
+        <form id="leadForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+          
+          <!-- Client Name -->
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Customer / Project Name *</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-user text-xs"></i></span>
+              <input type="text" id="formName" required placeholder="e.g., Arumugam Residence / Sky Villa" class="w-full pl-9 pr-3 py-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tektonGold focus:bg-white outline-none">
+            </div>
+          </div>
+
+          <!-- Contact Phone -->
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Mobile Phone Number *</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-phone text-xs"></i></span>
+              <input type="tel" id="formPhone" required placeholder="e.g., 9876543210" class="w-full pl-9 pr-3 py-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tektonGold focus:bg-white outline-none">
+            </div>
+          </div>
+
+          <!-- Elevator Type -->
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Type of Elevator / Lift *</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-elevator text-xs"></i></span>
+              <select id="formLiftType" required class="w-full pl-9 pr-3 py-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tektonGold focus:bg-white outline-none appearance-none">
+                <option value="Passenger Lift">Passenger Lift (Residential/Commercial)</option>
+                <option value="Home Lift">Home / Villa Hydraulic Lift</option>
+                <option value="Goods Lift">Goods / Freight Lift</option>
+                <option value="Hospital Stretcher Lift">Hospital Stretcher Lift</option>
+                <option value="Capsule Panoramic Lift">Capsule / Panoramic Glass Lift</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Stops & Building Details -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 mb-1">Number of Floors *</label>
+              <select id="formStops" required class="w-full px-3 py-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tektonGold focus:bg-white outline-none">
+                <option value="G+1 (2 Stops)">G+1 (2 Stops)</option>
+                <option value="G+2 (3 Stops)">G+2 (3 Stops)</option>
+                <option value="G+3 (4 Stops)">G+3 (4 Stops)</option>
+                <option value="G+4 (5 Stops)">G+4 (5 Stops)</option>
+                <option value="G+5+ High Rise">G+5+ High Rise</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-gray-700 mb-1">Building Status *</label>
+              <select id="formBuildingStatus" required class="w-full px-3 py-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tektonGold focus:bg-white outline-none">
+                <option value="Under Construction">Under Construction</option>
+                <option value="Existing / Civil Ready">Existing / Civil Ready</option>
+                <option value="Renovation Retrofit">Renovation Retrofit</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- GPS Location Pin -->
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Site GPS Location Coordinates *</label>
+            <div class="flex gap-2">
+              <input type="text" id="formLocation" required readonly placeholder="Tap GPS button to capture location..." class="w-full px-3 py-2.5 text-xs bg-gray-100 border border-gray-200 rounded-lg outline-none text-gray-600">
+              <button type="button" onclick="fetchGPSLocation()" class="px-3 py-2 bg-tektonNavy text-tektonGold rounded-lg text-xs font-bold flex items-center gap-1.5 shadow hover:bg-tektonNavyDark transition">
+                <i class="fa-solid fa-location-crosshairs text-sm"></i>
+                <span>Get GPS</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Site Photo Upload -->
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Site Shaft / Building Photo</label>
+            <input type="file" id="formPhotoInput" accept="image/*" capture="environment" onchange="previewPhoto(event)" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-tektonGold/20 file:text-tektonNavy hover:file:bg-tektonGold">
+            <div id="photoPreviewContainer" class="mt-2 hidden">
+              <img id="photoPreview" class="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-inner">
+            </div>
+          </div>
+
+          <!-- Remarks / Civil Specs -->
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1">Civil Shaft Remarks & Capacity Notes</label>
+            <textarea id="formRemarks" rows="2" placeholder="e.g., Shaft size 4x4 ft, 6 Passenger capacity required..." class="w-full p-2.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tektonGold focus:bg-white outline-none"></textarea>
+          </div>
+
+          <!-- Pinned Submit Button -->
+          <div class="pt-2">
+            <button type="submit" id="btnSubmitForm" class="w-full py-3.5 bg-tektonGold text-tektonNavy font-extrabold text-sm rounded-xl shadow-md hover:bg-tektonGoldHover transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Submit Lead to TEKTON</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </main>
+
+
+    <!-- VIEW 3: ALL LEADS LIST VIEW -->
+    <main id="viewLeads" class="app-view p-4 space-y-3 hidden">
+      
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-bold text-tektonNavy">All Lead Enquiries</h2>
+        <span id="leadCountBadge" class="bg-tektonNavy text-tektonGold text-xs font-bold px-2.5 py-0.5 rounded-full">0 Leads</span>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
+        <input type="text" id="searchInput" onkeyup="filterLeads()" placeholder="Search by name, phone, lift type, city..." class="w-full pl-9 pr-3 py-2 text-xs bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-tektonGold">
+      </div>
+
+      <!-- Stage Filter Badge Buttons (Horizontal Scrollable) -->
+      <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-1">
+        <button onclick="setFilterCategory('All')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-tektonNavy text-white">All</button>
+        <button onclick="setFilterCategory('New Lead')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">New</button>
+        <button onclick="setFilterCategory('Site Survey Completed')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">Surveyed</button>
+        <button onclick="setFilterCategory('Quotation Shared')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">Quoted</button>
+        <button onclick="setFilterCategory('Order Won')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">Won</button>
+        <button onclick="setFilterCategory('Manufacturing & Dispatch')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">Manufacturing</button>
+        <button onclick="setFilterCategory('Shaft Erection')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">Erection</button>
+        <button onclick="setFilterCategory('Testing & Handover')" class="category-filter-btn px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-200 text-gray-700">Handover</button>
+      </div>
+
+      <!-- Main Leads Feed -->
+      <div id="fullLeadsList" class="space-y-3">
+        <!-- Dynamic items filled via JS -->
+      </div>
+
+    </main>
+
+
+    <!-- VIEW 4: OPERATIONS DASHBOARD -->
+    <main id="viewOps" class="app-view p-4 space-y-4 hidden">
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-base font-bold text-tektonNavy mb-1">Operations & Site Erection Status</h2>
+        <p class="text-xs text-gray-500">Track civil readiness, engineering schedule & material dispatch.</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-3">
+        <h3 class="text-xs font-bold text-tektonNavy uppercase tracking-wider">Active Erection Projects</h3>
+        <div id="opsProjectList" class="space-y-3">
+          <!-- Dynamic ops cards filled via JS -->
+        </div>
+      </div>
+    </main>
+
+
+    <!-- VIEW 5: ANALYTICS DASHBOARD -->
+    <main id="viewAnalytics" class="app-view p-4 space-y-4 hidden">
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-base font-bold text-tektonNavy mb-1">Lead Conversion Analytics</h2>
+        <p class="text-xs text-gray-500">Performance metrics across all elevator segments.</p>
+      </div>
+
+      <!-- Conversion Rate Summary Bars -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-3">
+        <h3 class="text-xs font-bold text-tektonNavy uppercase">Funnel Conversion Efficiency</h3>
+        
+        <div class="space-y-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-600">New Enquiry → Survey Completed</span>
+            <span class="font-bold text-tektonNavy">85%</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-blue-600 h-full w-[85%]"></div>
+          </div>
+        </div>
+
+        <div class="space-y-1 pt-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-600">Survey → Quotation Won</span>
+            <span class="font-bold text-tektonNavy">62%</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-tektonGold h-full w-[62%]"></div>
+          </div>
+        </div>
+
+        <div class="space-y-1 pt-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-600">Manufacturing → Handover</span>
+            <span class="font-bold text-tektonNavy">94%</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-emerald-600 h-full w-[94%]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elevator Type Distribution -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-2">
+        <h3 class="text-xs font-bold text-tektonNavy uppercase">Demand by Lift Type</h3>
+        <div id="analyticsTypeDistribution" class="space-y-2 text-xs pt-1">
+          <!-- Dynamic chart items -->
+        </div>
+      </div>
+    </main>
+
+
+    <!-- ==================== DETAIL / INSPECTION MODAL ==================== -->
+    <div id="detailModal" class="fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+      <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl max-h-[90vh] overflow-y-auto p-5 space-y-4 shadow-2xl relative">
+        
+        <!-- Close Button -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="border-b border-gray-100 pb-3">
+          <span id="modalStageBadge" class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">New Lead</span>
+          <h3 id="modalName" class="text-lg font-bold text-tektonNavy mt-1">Client Name</h3>
+          <p id="modalDate" class="text-xs text-gray-400">Date Logged</p>
+        </div>
+
+        <!-- Quick Communication Shortcuts -->
+        <div class="grid grid-cols-3 gap-2">
+          <a id="modalCallBtn" href="#" class="py-2 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold flex flex-col items-center justify-center gap-1 border border-emerald-200">
+            <i class="fa-solid fa-phone"></i> Call Client
+          </a>
+          <a id="modalWhatsappBtn" href="#" target="_blank" class="py-2 bg-green-50 text-green-700 rounded-lg text-xs font-bold flex flex-col items-center justify-center gap-1 border border-green-200">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+          <a id="modalMapBtn" href="#" target="_blank" class="py-2 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold flex flex-col items-center justify-center gap-1 border border-blue-200">
+            <i class="fa-solid fa-map-location-dot"></i> GPS Map
+          </a>
+        </div>
+
+        <!-- Technical Specs -->
+        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-2">
+          <div class="flex justify-between"><span class="text-gray-500">Lift Type:</span><span id="modalLiftType" class="font-bold text-tektonNavy">--</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Stops / Floors:</span><span id="modalStops" class="font-bold text-tektonNavy">--</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Building Status:</span><span id="modalBuildingStatus" class="font-bold text-tektonNavy">--</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Phone:</span><span id="modalPhone" class="font-bold text-tektonNavy">--</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Location GPS:</span><span id="modalLocation" class="font-bold text-gray-700">--</span></div>
+          <!-- Timestamp field -->
+          <div class="flex justify-between pt-1 border-t border-gray-200"><span class="text-gray-500">Last Status Update:</span><span id="modalLastUpdated" class="font-bold text-amber-600">--</span></div>
+        </div>
+
+        <!-- Photo Section -->
+        <div id="modalPhotoContainer" class="hidden">
+          <p class="text-xs font-bold text-gray-700 mb-1">Site Survey Image:</p>
+          <img id="modalPhoto" class="w-full h-44 object-cover rounded-xl border border-gray-200 shadow-sm">
+        </div>
+
+        <!-- Remarks -->
+        <div>
+          <p class="text-xs font-bold text-gray-700 mb-1">Civil Shaft Remarks:</p>
+          <p id="modalRemarks" class="text-xs text-gray-600 bg-gray-50 p-2.5 rounded-lg border border-gray-200">--</p>
+        </div>
+
+        <!-- Stage Advance Controller -->
+        <div class="pt-2 border-t border-gray-100">
+          <p class="text-xs font-bold text-tektonNavy mb-2">Advance TEKTON Operational Lifecycle Stage:</p>
+          <div class="flex gap-2">
+            <select id="modalStageSelect" class="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg font-semibold text-tektonNavy">
+              <option value="New Lead">1. New Lead</option>
+              <option value="Site Survey Completed">2. Site Survey Completed</option>
+              <option value="Quotation Shared">3. Quotation Shared</option>
+              <option value="Order Won">4. Order Won</option>
+              <option value="Manufacturing & Dispatch">5. Manufacturing & Dispatch</option>
+              <option value="Shaft Erection">6. Shaft Erection & Installation</option>
+              <option value="Testing & Handover">7. Testing & Handover</option>
+            </select>
+            <button onclick="updateLeadStageFromModal()" class="px-4 py-2 bg-tektonNavy text-tektonGold text-xs font-bold rounded-lg whitespace-nowrap shadow hover:bg-tektonNavyDark">
+              Update
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ==================== FIXED BOTTOM NAVIGATION BAR ==================== -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-tektonNavy text-gray-400 border-t border-tektonNavyDark z-40 flex justify-around items-center py-2 shadow-2xl">
+      
+      <button onclick="switchTab('home')" id="navHome" class="nav-btn flex flex-col items-center text-tektonGold">
+        <i class="fa-solid fa-house text-base"></i>
+        <span class="text-[10px] mt-0.5 font-semibold">Home</span>
+      </button>
+
+      <button onclick="switchTab('newLead')" id="navNewLead" class="nav-btn flex flex-col items-center hover:text-tektonGold transition">
+        <i class="fa-solid fa-circle-plus text-base"></i>
+        <span class="text-[10px] mt-0.5 font-semibold">+ Lead</span>
+      </button>
+
+      <button onclick="switchTab('leads')" id="navLeads" class="nav-btn flex flex-col items-center hover:text-tektonGold transition">
+        <i class="fa-solid fa-clipboard-list text-base"></i>
+        <span class="text-[10px] mt-0.5 font-semibold">Leads</span>
+      </button>
+
+      <button onclick="switchTab('ops')" id="navOps" class="nav-btn flex flex-col items-center hover:text-tektonGold transition">
+        <i class="fa-solid fa-gear text-base"></i>
+        <span class="text-[10px] mt-0.5 font-semibold">Ops</span>
+      </button>
+
+      <button onclick="switchTab('analytics')" id="navAnalytics" class="nav-btn flex flex-col items-center hover:text-tektonGold transition">
+        <i class="fa-solid fa-chart-pie text-base"></i>
+        <span class="text-[10px] mt-0.5 font-semibold">Analytics</span>
+      </button>
+
+    </nav>
+
+  </div>
+
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  
+<script>
+// ==================== APP SECURITY & LOGIN CONFIG ====================
+// Set your desired password/PIN here:
+const APP_PASSWORD = "vanagaram"; 
+
+// Check authentication on app startup
+window.addEventListener('DOMContentLoaded', () => {
+  // Check if user is already logged in for this session
+  const isAuthenticated = sessionStorage.getItem('tekton_authenticated');
+  
+  if (isAuthenticated !== 'true') {
+    // Show login screen if not authenticated
+    document.getElementById('loginScreen').classList.remove('hidden');
+  }
+});
+
+// Handle Password Validation
+function handleLoginSubmit(e) {
+  e.preventDefault();
+  const inputPass = document.getElementById('loginPassword').value;
+  const errorMsg = document.getElementById('loginError');
+
+  if (inputPass === APP_PASSWORD) {
+    // Save session state
+    sessionStorage.setItem('tekton_authenticated', 'true');
+    
+    // Hide login screen
+    document.getElementById('loginScreen').classList.add('hidden');
+    errorMsg.classList.add('hidden');
+  } else {
+    // Display error message
+    errorMsg.classList.remove('hidden');
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginPassword').focus();
+  }
+}
+
+// Optional Logout Function (Can be triggered from header or profile)
+function logoutApp() {
+  sessionStorage.removeItem('tekton_authenticated');
+  location.reload();
+}
+
+    // ==================== TEKTON LOGO CONFIGURATION ====================
+    // Change this filename whenever you update your logo image file!
+    const TEKTON_LOGO_FILE = 'logo.png';
+
+    // Automatically bind logo file to all logo slots on app boot
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.tekton-logo-img').forEach(img => {
+        img.src = TEKTON_LOGO_FILE;
+      });
+    });
+
+    // Configuration & Initial State
+    const GOOGLE_WEB_APP_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    let leadsData = JSON.parse(localStorage.getItem('tekton_leads')) || [
+      {
+        id: "TK-1001",
+        name: "Arumugam Residency",
+        phone: "9876543210",
+        liftType: "Passenger Lift",
+        stops: "G+2 (3 Stops)",
+        buildingStatus: "Under Construction",
+        location: "13.0827° N, 80.2707° E (Chennai)",
+        photo: null,
+        remarks: "Shaft 5x5 ft ready. Electrical 3-phase supply available.",
+        stage: "New Lead",
+        date: "2026-10-22",
+        lastUpdated: "2026-10-22 (Initial Entry)"
+      },
+      {
+        id: "TK-1002",
+        name: "Venkatesh Commercial Complex",
+        phone: "9840123456",
+        liftType: "Goods Lift",
+        stops: "G+4 (5 Stops)",
+        buildingStatus: "Existing / Civil Ready",
+        location: "9.9252° N, 78.1198° E (Madurai)",
+        photo: null,
+        remarks: "1000kg load capacity requested. Full stainless steel finish.",
+        stage: "Quotation Shared",
+        date: "2026-10-20",
+        lastUpdated: "2026-10-20 (Initial Entry)"
+      },
+      {
+        id: "TK-1003",
+        name: "Dr. Kovilpatti Clinic",
+        phone: "9789012345",
+        liftType: "Hospital Stretcher Lift",
+        stops: "G+3 (4 Stops)",
+        buildingStatus: "Renovation Retrofit",
+        location: "9.1700° N, 77.8700° E (Kovilpatti)",
+        photo: null,
+        remarks: "Requires emergency battery backup (ARD) system.",
+        stage: "Shaft Erection",
+        date: "2026-10-18",
+        lastUpdated: "2026-10-18 (Initial Entry)"
+      }
+    ];
+
+    let currentSelectedLeadId = null;
+    let activeFilterCategory = "All";
+
+    // Launch Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set Date Stamp
+      const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+      document.getElementById('currentDateStamp').innerText = new Date().toLocaleDateString('en-US', options);
+
+      // Save initial dummy data if empty
+      if(!localStorage.getItem('tekton_leads')) {
+        saveLeadsToStorage();
+      }
+
+      // Trigger Door Opening Animation
+      setTimeout(() => {
+        document.getElementById('splashScreen').classList.add('doors-open');
+        setTimeout(() => {
+          document.getElementById('splashScreen').classList.add('splash-fade-out');
+        }, 1400);
+      }, 800);
+
+      renderAllViews();
+    });
+
+    // Save Data to Storage
+    function saveLeadsToStorage() {
+      localStorage.setItem('tekton_leads', JSON.stringify(leadsData));
+    }
+
+    // Tab Navigation Switcher
+    function switchTab(tabName) {
+      document.querySelectorAll('.app-view').forEach(view => view.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-tektonGold'));
+
+      if(tabName === 'home') {
+        document.getElementById('viewHome').classList.remove('hidden');
+        document.getElementById('navHome').classList.add('text-tektonGold');
+      } else if(tabName === 'newLead') {
+        document.getElementById('viewNewLead').classList.remove('hidden');
+        document.getElementById('navNewLead').classList.add('text-tektonGold');
+      } else if(tabName === 'leads') {
+        document.getElementById('viewLeads').classList.remove('hidden');
+        document.getElementById('navLeads').classList.add('text-tektonGold');
+      } else if(tabName === 'ops') {
+        document.getElementById('viewOps').classList.remove('hidden');
+        document.getElementById('navOps').classList.add('text-tektonGold');
+      } else if(tabName === 'analytics') {
+        document.getElementById('viewAnalytics').classList.remove('hidden');
+        document.getElementById('navAnalytics').classList.add('text-tektonGold');
+      }
+
+      renderAllViews();
+    }
+
+    // Render All Dynamic Views
+    function renderAllViews() {
+      renderMetrics();
+      renderHomeRecentFeed();
+      renderFullLeadsList();
+      renderOpsView();
+      renderAnalyticsView();
+    }
+
+    // Render KPI Metrics & Stage Bars
+    function renderMetrics() {
+      const total = leadsData.length;
+      const pending = leadsData.filter(l => l.stage === 'New Lead').length;
+      const ops = leadsData.filter(l => l.stage === 'Shaft Erection' || l.stage === 'Manufacturing & Dispatch').length;
+      const completed = leadsData.filter(l => l.stage === 'Testing & Handover').length;
+
+      document.getElementById('metricTotalLeads').innerText = total;
+      document.getElementById('metricPendingSurveys').innerText = pending;
+      document.getElementById('metricInOps').innerText = ops;
+      document.getElementById('metricCompleted').innerText = completed;
+
+      // Stage counts
+      const counts = {
+        'New Lead': leadsData.filter(l => l.stage === 'New Lead').length,
+        'Site Survey Completed': leadsData.filter(l => l.stage === 'Site Survey Completed').length,
+        'Quotation Shared': leadsData.filter(l => l.stage === 'Quotation Shared').length,
+        'Order Won': leadsData.filter(l => l.stage === 'Order Won').length,
+        'Manufacturing & Dispatch': leadsData.filter(l => l.stage === 'Manufacturing & Dispatch').length,
+        'Shaft Erection': leadsData.filter(l => l.stage === 'Shaft Erection').length,
+        'Testing & Handover': leadsData.filter(l => l.stage === 'Testing & Handover').length,
+      };
+
+      document.getElementById('stageCountNew').innerText = counts['New Lead'];
+      document.getElementById('stageCountSurvey').innerText = counts['Site Survey Completed'];
+      document.getElementById('stageCountQuote').innerText = counts['Quotation Shared'];
+      document.getElementById('stageCountWon').innerText = counts['Order Won'];
+      document.getElementById('stageCountMfg').innerText = counts['Manufacturing & Dispatch'];
+      document.getElementById('stageCountErection').innerText = counts['Shaft Erection'];
+      document.getElementById('stageCountHandover').innerText = counts['Testing & Handover'];
+
+      document.getElementById('stageBarNew').style.width = total ? `${(counts['New Lead']/total)*100}%` : '0%';
+      document.getElementById('stageBarSurvey').style.width = total ? `${(counts['Site Survey Completed']/total)*100}%` : '0%';
+      document.getElementById('stageBarQuote').style.width = total ? `${(counts['Quotation Shared']/total)*100}%` : '0%';
+      document.getElementById('stageBarWon').style.width = total ? `${(counts['Order Won']/total)*100}%` : '0%';
+      document.getElementById('stageBarMfg').style.width = total ? `${(counts['Manufacturing & Dispatch']/total)*100}%` : '0%';
+      document.getElementById('stageBarErection').style.width = total ? `${(counts['Shaft Erection']/total)*100}%` : '0%';
+      document.getElementById('stageBarHandover').style.width = total ? `${(counts['Testing & Handover']/total)*100}%` : '0%';
+    }
+
+    // Render Home Recent Feed (Top 3)
+    function renderHomeRecentFeed() {
+      const container = document.getElementById('homeRecentLeadsList');
+      container.innerHTML = "";
+
+      const recent = [...leadsData].reverse().slice(0, 3);
+      if(recent.length === 0) {
+        container.innerHTML = `<div class="bg-white p-4 text-center text-xs text-gray-400 rounded-xl">No site enquiries logged yet.</div>`;
+        return;
+      }
+
+      recent.forEach(lead => {
+        container.appendChild(createLeadCardHTML(lead));
+      });
+    }
+
+    // Render Full Leads List View
+    function renderFullLeadsList() {
+      const container = document.getElementById('fullLeadsList');
+      container.innerHTML = "";
+
+      let filtered = [...leadsData].reverse();
+
+      if(activeFilterCategory !== 'All') {
+        filtered = filtered.filter(l => l.stage === activeFilterCategory);
+      }
+
+      document.getElementById('leadCountBadge').innerText = `${filtered.length} Leads`;
+
+      if(filtered.length === 0) {
+        container.innerHTML = `<div class="bg-white p-6 text-center text-xs text-gray-400 rounded-xl border border-gray-100">No leads found in this stage.</div>`;
+        return;
+      }
+
+      filtered.forEach(lead => {
+        container.appendChild(createLeadCardHTML(lead));
+      });
+    }
+
+    // Create Single Lead Card Component
+    function createLeadCardHTML(lead) {
+      const div = document.createElement('div');
+      div.className = "bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-tektonGold transition cursor-pointer space-y-2";
+      div.onclick = () => openModal(lead.id);
+
+      let stageBadgeColor = "bg-blue-50 text-blue-700 border-blue-200";
+      if(lead.stage === 'Order Won') stageBadgeColor = "bg-emerald-50 text-emerald-700 border-emerald-200";
+      if(lead.stage === 'Shaft Erection') stageBadgeColor = "bg-amber-50 text-amber-700 border-amber-200";
+      if(lead.stage === 'Testing & Handover') stageBadgeColor = "bg-teal-50 text-teal-700 border-teal-200";
+
+      div.innerHTML = `
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-[10px] font-bold text-gray-400">${lead.id} • ${lead.date}</span>
+            <h4 class="text-sm font-bold text-tektonNavy">${lead.name}</h4>
+          </div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${stageBadgeColor}">${lead.stage}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1 text-xs text-gray-600 pt-1 border-t border-gray-50">
+          <div><i class="fa-solid fa-elevator text-tektonGold mr-1"></i> ${lead.liftType}</div>
+          <div><i class="fa-solid fa-building text-tektonGold mr-1"></i> ${lead.stops}</div>
+          <div><i class="fa-solid fa-phone text-tektonGold mr-1"></i> ${lead.phone}</div>
+          <div class="truncate"><i class="fa-solid fa-location-dot text-tektonGold mr-1"></i> ${lead.location}</div>
+        </div>
+      `;
+      return div;
+    }
+
+    // Filter Categories
+    function setFilterCategory(category) {
+      activeFilterCategory = category;
+      document.querySelectorAll('.category-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-tektonNavy', 'text-white');
+        btn.classList.add('bg-gray-200', 'text-gray-700');
+      });
+      event.target.classList.remove('bg-gray-200', 'text-gray-700');
+      event.target.classList.add('bg-tektonNavy', 'text-white');
+      renderFullLeadsList();
+    }
+
+    function filterLeads() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.getElementById('fullLeadsList').children;
+      Array.from(cards).forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? "block" : "none";
+      });
+    }
+
+    // GPS Geolocation Handler
+    function fetchGPSLocation() {
+      const input = document.getElementById('formLocation');
+      input.value = "Acquiring GPS coordinates...";
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            const lat = pos.coords.latitude.toFixed(4);
+            const lng = pos.coords.longitude.toFixed(4);
+            input.value = `${lat}° N, ${lng}° E`;
+          },
+          err => {
+            input.value = "Chennai Site HQ (13.0827° N, 80.2707° E)";
+          }
+        );
+      } else {
+        input.value = "Chennai Site HQ (13.0827° N, 80.2707° E)";
+      }
+    }
+
+    // Photo Preview Base64
+    function previewPhoto(e) {
+      const file = e.target.files[0];
+      if(file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.getElementById('photoPreview').src = evt.target.result;
+          document.getElementById('photoPreviewContainer').classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Submit Lead Form
+    function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('btnSubmitForm');
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving to TEKTON DB...`;
+      btn.disabled = true;
+
+      const photoInput = document.getElementById('formPhotoInput');
+      let photoData = null;
+      if(photoInput.files && photoInput.files[0]) {
+        photoData = document.getElementById('photoPreview').src;
+      }
+
+      const now = new Date();
+      const creationTimestamp = now.toLocaleDateString('en-IN') + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const newLead = {
+        id: "TK-" + Math.floor(1000 + Math.random() * 9000),
+        name: document.getElementById('formName').value,
+        phone: document.getElementById('formPhone').value,
+        liftType: document.getElementById('formLiftType').value,
+        stops: document.getElementById('formStops').value,
+        buildingStatus: document.getElementById('formBuildingStatus').value,
+        location: document.getElementById('formLocation').value || "Chennai Site HQ",
+        photo: photoData,
+        remarks: document.getElementById('formRemarks').value || "Standard installation parameters.",
+        stage: "New Lead",
+        date: new Date().toISOString().split('T')[0],
+        lastUpdated: creationTimestamp + " (Creation)"
+      };
+
+      leadsData.push(newLead);
+      saveLeadsToStorage();
+
+      setTimeout(() => {
+        alert(`Lead ${newLead.id} saved successfully!`);
+        document.getElementById('leadForm').reset();
+        document.getElementById('photoPreviewContainer').classList.add('hidden');
+        btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Submit Lead to TEKTON`;
+        btn.disabled = false;
+        switchTab('leads');
+      }, 600);
+    }
+
+    // Modal Details Inspector
+    function openModal(leadId) {
+      const lead = leadsData.find(l => l.id === leadId);
+      if(!lead) return;
+
+      currentSelectedLeadId = leadId;
+
+      document.getElementById('modalName').innerText = lead.name;
+      document.getElementById('modalDate').innerText = `ID: ${lead.id} • Date Logged: ${lead.date}`;
+      document.getElementById('modalStageBadge').innerText = lead.stage;
+      document.getElementById('modalLiftType').innerText = lead.liftType;
+      document.getElementById('modalStops').innerText = lead.stops;
+      document.getElementById('modalBuildingStatus').innerText = lead.buildingStatus;
+      document.getElementById('modalPhone').innerText = lead.phone;
+      document.getElementById('modalLocation').innerText = lead.location;
+      document.getElementById('modalRemarks').innerText = lead.remarks;
+      document.getElementById('modalLastUpdated').innerText = lead.lastUpdated || `${lead.date} (Initial Entry)`;
+
+      // Direct Action Links
+      document.getElementById('modalCallBtn').href = `tel:${lead.phone}`;
+      document.getElementById('modalWhatsappBtn').href = `https://wa.me/91${lead.phone}?text=Hello%20${encodeURIComponent(lead.name)},%20regarding%20your%20TEKTON%20Elevator%20enquiry...`;
+      document.getElementById('modalMapBtn').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lead.location)}`;
+
+      // Photo
+      if(lead.photo) {
+        document.getElementById('modalPhoto').src = lead.photo;
+        document.getElementById('modalPhotoContainer').classList.remove('hidden');
+      } else {
+        document.getElementById('modalPhotoContainer').classList.add('hidden');
+      }
+
+      document.getElementById('modalStageSelect').value = lead.stage;
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // Update Stage & Log Real-Time Timestamp
+    function updateLeadStageFromModal() {
+      if (!currentSelectedLeadId) return;
+      
+      const newStage = document.getElementById('modalStageSelect').value;
+      const lead = leadsData.find(l => l.id === currentSelectedLeadId);
+      
+      if (lead) {
+        // Generate real-time timestamp
+        const now = new Date();
+        const currentTimestamp = now.toLocaleDateString('en-IN') + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Update lead attributes
+        lead.stage = newStage;
+        lead.lastUpdated = currentTimestamp;
+
+        // Maintain a history log of all updates
+        if (!lead.history) lead.history = [];
+        lead.history.push({
+          stage: newStage,
+          updatedAt: currentTimestamp
+        });
+
+        saveLeadsToStorage();
+        closeModal();
+        renderAllViews();
+
+        alert(`Lead status updated to "${newStage}" at ${currentTimestamp}`);
+      }
+    }
+
+    // Render Ops View
+    function renderOpsView() {
+      const container = document.getElementById('opsProjectList');
+      container.innerHTML = "";
+
+      const activeOps = leadsData.filter(l => l.stage === 'Order Won' || l.stage === 'Manufacturing & Dispatch' || l.stage === 'Shaft Erection');
+      if(activeOps.length === 0) {
+        container.innerHTML = `<div class="p-4 text-center text-xs text-gray-400">No projects currently in active installation.</div>`;
+        return;
+      }
+
+      activeOps.forEach(lead => {
+        const div = document.createElement('div');
+        div.className = "p-3 bg-gray-50 rounded-lg border border-gray-200 text-xs space-y-1.5";
+        div.innerHTML = `
+          <div class="flex justify-between font-bold text-tektonNavy">
+            <span>${lead.name}</span>
+            <span class="text-amber-600">${lead.stage}</span>
+          </div>
+          <p class="text-gray-500">Specs: ${lead.liftType} (${lead.stops})</p>
+          <div class="flex items-center gap-2 pt-1">
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">Civil Shaft Ready</span>
+            <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded">Materials Dispatched</span>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Render Analytics View
+    function renderAnalyticsView() {
+      const container = document.getElementById('analyticsTypeDistribution');
+      container.innerHTML = "";
+
+      const types = ['Passenger Lift', 'Home Lift', 'Goods Lift', 'Hospital Stretcher Lift', 'Capsule Panoramic Lift'];
+      const total = leadsData.length || 1;
+
+      types.forEach(type => {
+        const count = leadsData.filter(l => l.liftType === type).length;
+        const pct = Math.round((count / total) * 100);
+
+        const div = document.createElement('div');
+        div.className = "space-y-1";
+        div.innerHTML = `
+          <div class="flex justify-between">
+            <span class="text-gray-600">${type}</span>
+            <span class="font-bold text-tektonNavy">${count} (${pct}%)</span>
+          </div>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-tektonNavy h-full" style="width: ${pct}%"></div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Manual Webhook Trigger
+    function triggerSync() {
+      alert("Triggering sync to Google Sheets database...");
+    }
+  </script>
+</body>
+</html>
