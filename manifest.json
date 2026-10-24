@@ -1,5 +1,5 @@
 {
-  "name": "TEKTON Elevators - Site & Operations",
+  "name": "TEKTON Elevators",
   "short_name": "TEKTON",
   "description": "Official TEKTON Elevators site lead collection, survey entry, and operational status management app.",
   "start_url": "./index.html",
@@ -7,8 +7,9 @@
   "background_color": "#0A1A3A",
   "theme_color": "#0A1A3A",
   "orientation": "portrait",
-  "id": "/tekton-lead-app/",
+  "id": "tekton-lead-app",
   "scope": "./",
+  "prefer_related_applications": false,
   "categories": ["business", "utilities"],
   "icons": [
     {
@@ -25,47 +26,9 @@
     },
     {
       "src": "logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "TEKTON Elevators Launcher App"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "TEKTON App Splashes Animation"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "New Survey Entry",
-      "short_name": "New Survey",
-      "description": "Log a new site evaluation",
-      "url": "./index.html",
-      "icons": [{ "src": "logo.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "View Enquiries",
-      "short_name": "Enquiries",
-      "description": "View previous submissions",
-      "url": "./index.html",
-      "icons": [{ "src": "logo.png", "sizes": "192x192" }]
     }
   ]
 }
