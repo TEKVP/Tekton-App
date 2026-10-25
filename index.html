@@ -650,6 +650,72 @@
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   
 <script>
+
+  /* Neon Glow Animation for Elevator Splash Screen Frame */
+  @keyframes neonGlow {
+    0%, 100% {
+      box-shadow: 0 0 15px #F5A623, inset 0 0 15px #F5A623, 0 0 30px #0A1A3A;
+      border-color: #F5A623;
+    }
+    50% {
+      box-shadow: 0 0 30px #F5A623, inset 0 0 20px #F5A623, 0 0 50px #3B82F6;
+      border-color: #FFD700;
+    }
+  }
+
+  .neon-border {
+    animation: neonGlow 2s infinite ease-in-out;
+  }
+
+  /* Elevator Sliding Doors Animation */
+  .door-left {
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+  .door-right {
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+
+  /* Sliding Door Opening Trigger */
+  #splashScreen.doors-open #doorLeft {
+    transform: translateX(-100%) !important;
+  }
+  #splashScreen.doors-open #doorRight {
+    transform: translateX(100%) !important;
+  }
+
+  /* Fade Out Splash Screen */
+  #splashScreen.splash-fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  /* Hide scrollbars for slick mobile look */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  window.addEventListener('load', () => {
+  // Trigger door opening after a 600ms delay
+  setTimeout(() => {
+    const splash = document.getElementById('splashScreen');
+    if (splash) {
+      splash.classList.add('doors-open');
+      
+      // Fade out the splash background after doors finish opening (1.2s transition)
+      setTimeout(() => {
+        splash.classList.add('splash-fade-out');
+      }, 1200);
+    }
+  }, 600);
+});
   
 
   // Register Service Worker for Offline Capabilities & Store Submission Approval
