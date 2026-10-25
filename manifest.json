@@ -9,9 +9,9 @@
   "scope": "./",
   "display": "standalone",
   "display_override": [
+    "tabbed",
     "standalone",
-    "window-controls-overlay",
-    "minimal-ui"
+    "window-controls-overlay"
   ],
   "background_color": "#0A1A3A",
   "theme_color": "#0A1A3A",
@@ -20,40 +20,52 @@
     "business",
     "utilities"
   ],
-  "prefer_related_applications": false,
-  "related_applications": [],
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "com.tekton.elevators",
+      "url": "https://play.google.com/store/apps/details?id=com.tekton.elevators"
+    }
+  ],
   "iarc_rating_id": "e58c1706-613d-4217-0000-000000000000",
   "launch_handler": {
     "client_mode": "focus-existing"
   },
   "icons": [
     {
-      "src": "logo.png",
-      "sizes": "900x207",
+      "src": "icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.png",
-      "sizes": "900x207",
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "logo.png",
-      "sizes": "900x207",
+      "src": "icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "TEKTON Elevators Executive Dashboard"
+      "label": "TEKTON Elevators Desktop Overview"
     },
     {
-      "src": "logo.png",
-      "sizes": "900x207",
+      "src": "icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "TEKTON Elevators Mobile App Interface"
+      "label": "TEKTON Elevators Mobile Overview"
     }
   ],
   "shortcuts": [
@@ -64,8 +76,8 @@
       "url": "./index.html",
       "icons": [
         {
-          "src": "logo.png",
-          "sizes": "900x207",
+          "src": "icon-192.png",
+          "sizes": "192x192",
           "type": "image/png"
         }
       ]
@@ -77,8 +89,8 @@
       "url": "./index.html",
       "icons": [
         {
-          "src": "logo.png",
-          "sizes": "900x207",
+          "src": "icon-192.png",
+          "sizes": "192x192",
           "type": "image/png"
         }
       ]
@@ -111,25 +123,16 @@
   ],
   "widgets": [
     {
-      "name": "TEKTON Quick Stats",
-      "short_name": "TEKTON Stats",
-      "description": "Overview of TEKTON Lead Status",
-      "tag": "tekton-stats-widget",
-      "template": "tekton-stats-template",
-      "ms_ac_template": "widgets/tekton-stats.json",
-      "data": "widgets/tekton-stats-data.json",
+      "name": "TEKTON Stats",
+      "short_name": "TEKTON",
+      "description": "Overview of TEKTON leads",
+      "tag": "tekton-widget",
+      "template": "widgets/tekton-template.json",
       "type": "application/json",
-      "screenshots": [
-        {
-          "src": "logo.png",
-          "sizes": "900x207",
-          "label": "Widget Preview"
-        }
-      ],
       "icons": [
         {
-          "src": "logo.png",
-          "sizes": "900x207"
+          "src": "icon-192.png",
+          "sizes": "192x192"
         }
       ]
     }
@@ -143,6 +146,9 @@
   "scope_extensions": [
     {
       "origin": "tekvp.github.io"
+    },
+    {
+      "origin": "*.github.io"
     }
   ]
 }
